@@ -1,21 +1,19 @@
-import React, { Component } from "react";
+import React, { Component,useState } from "react";
 import styles from "./Questionnaire.module.scss";
 import FormBtn from "./FormBtn/FormBtn";
 import { Link } from "react-router-dom";
-import { sections } from "../assets/Data";
+import { data } from "../assets/Data";
 import logo from "../assets/xpovi.png"
-class Questionnaire extends Component {
-  state = {
-    sections,
-    investment: null,
-    displayBtn: false,
-    currentSection: 1,
+const Questionnaire =(props)=> {
 
-  };
+const [sections,setSections]=useState(data)
+  const [investment, setInvestment] = useState(null)
+  const [currentSection, setcurrentsection] = useState(1)
 
-  Clicked = (id, index) => {
-    const { sections } = this.state;
-    const current = sections.find((item) => item.id === id);
+
+ const Clicked = (id, index) => {
+     const data = [...sections]
+    const current = data.find((item) => item.id === id);
 
     if (current.answer) {
       current.options.find(
@@ -31,22 +29,15 @@ class Questionnaire extends Component {
         (option) => option.choice === current.answer
       ).selected = true; //add green selection
     }
-      this.setState({
-        FormData,
-      })
+      setSections(data)
     
   };
-
-
-
-  sendAnswers=()=>{
-        if  (this.state.investment|| this.state.sections[3].answer=="no"){
+  const sendAnswers=()=>{
+        if  (investment|| sections[3].answer=="no"){
 
         }else alert("please complete the questionnaire before proceeding")
     
   }
-  render() {
-    const { sections, currentSection } = this.state;
     return (
       <div className={styles.FormPage}>
           <div className={styles.menu}>
@@ -63,36 +54,33 @@ class Questionnaire extends Component {
           {currentSection == 1 ? (
             <>
               {" "}
-              <FormBtn section={sections} ID={0} active={this.Clicked} />
+              <FormBtn section={sections} ID={0} active={Clicked} />
               );
               {sections[0].answer === "B2B" && (
-                <FormBtn section={sections} ID={1} active={this.Clicked} />
+                <FormBtn section={sections} ID={1} active={Clicked} />
               )}
               {sections[0].answer === "B2C" && (
-                <FormBtn section={sections} ID={2} active={this.Clicked} />
+                <FormBtn section={sections} ID={2} active={Clicked} />
               )}
               {sections[0].answer === "both" && (
                 <>
-                  <FormBtn section={sections} ID={1} active={this.Clicked} />
-                  <FormBtn section={sections} ID={2} active={this.Clicked} />
+                  <FormBtn section={sections} ID={1} active={Clicked} />
+                  <FormBtn section={sections} ID={2} active={Clicked} />
                 </>
               )}
             </>
           ) : (
             <div className={styles.InputContainer}>
-              <FormBtn ID={3} section={sections} active={this.Clicked} />
+              <FormBtn ID={3} section={sections} active={Clicked} />
               <p>how much was the investment?</p>
               <input
                 type="number"
                 name="investment"
                 min="0"
                 disabled={sections[3].answer == "no"}
-                value={this.state.investment}
+                value={investment}
                 onChange={(e) =>
-                  this.setState({
-                    investment: e.target.value,
-                    displayBtn:true
-                  })
+                  setInvestment(e.target.value)
                 }
               />
             </div>
@@ -103,23 +91,18 @@ class Questionnaire extends Component {
             <button
               onClick={
                 currentSection == 1
-                  ? () =>
-                      this.setState({
-                        currentSection: 2,
-                        displayBtn:false
-                      })
-                  : ()=>this.sendAnswers()
+                  ?()=>setcurrentsection(2)
+                  : ()=>sendAnswers()
               }
               className={styles.btn}
             >
               next
-              {console.log(this.state, "ajff")}
             </button>
           )}
         </div>
       </div>
     );
   }
-}
+
 
 export default Questionnaire;

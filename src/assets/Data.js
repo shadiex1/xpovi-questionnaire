@@ -1,4 +1,4 @@
-export const sections =[
+export const data =[
     {
       title: " Is your business model B2C or B2B or both",
       options: [
