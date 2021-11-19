@@ -1,0 +1,35 @@
+.section {
+    text-align: center;
+    width: 50%;
+    margin: auto;
+    // display: none;
+    // opacity: 0.3;
+    .title {
+      color: white;
+      font-size: 18px;
+    }
+  }
+.FormBtn {
+    min-width: 180px;
+    min-height: 60px;
+    border-radius: 10px 10px 0 10px;
+    background-color: white;
+    border: none;
+    outline: none;
+    margin: 5px;
+    padding: 10px;
+    p {
+      color: black;
+      text-transform: capitalize;
+    }
+    img {
+      object-fit: contain;
+    }
+    cursor: pointer;
+    &:hover {
+      background-color: rgb(19, 216, 157);
+      p {
+        color: white;
+      }
+    }
+  }
